@@ -15,7 +15,8 @@ get_covers() {
 # Function: sync_ipod
 sync_ipod() {
   echo "Syncing music to your iPod..."
-  Example: rsync -av --delete ~/Music/Mike/ /Volumes/MIKE\'S\ IPOD/Music/
+  rsync -av --ignore-existing --delete --exclude=".DS_Store" ~/Music/Mike/ /Volumes/MIKE\'S\ IPOD/Music/
+  find /Volumes/MIKE\'S\ IPOD/Music/ -name "cover.jpg" -exec magick {} -strip -interlace none {} \;
 }
 
 # Function: download_music
