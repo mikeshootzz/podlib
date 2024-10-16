@@ -15,23 +15,26 @@ echo "Your all-in-one music library manager, downloader, and iPod sync tool"
 
 sleep 1
 
+MUSIC_LIBRARY="${MUSIC_LIBRARY:-/music-library}"
+IPOD_MOUNT="${IPOD_MOUNT:-/ipod}"
+
 # Function: import_music
 import_music() {
   echo "Importing music into the library..."
-  beet import
+  beet -d "$MUSIC_LIBRARY" import
 }
 
 # Function: get_covers
 get_covers() {
   echo "Getting covers for the entire music library..."
-  sacad_r ~/Music/Mike/ 500 cover.jpg
+  sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
 }
 
 # Function: sync_ipod
 sync_ipod() {
   echo "Syncing music to your iPod..."
-  rsync -av --ignore-existing --delete --exclude=".DS_Store" ~/Music/Mike/ /Volumes/MIKE\'S\ IPOD/Music/
-  find /Volumes/MIKE\'S\ IPOD/Music/ -name "cover.jpg" -exec magick {} -strip -interlace none {} \;
+  rsync -av --ignore-existing --delete --exclude=".DS_Store" "$MUSIC_LIBRARY" "$IPOD_MOUNT"
+  find "$IPOD_MOUNT" -name "cover.jpg" -exec magick {} -strip -interlace none {} \;
 }
 
 # Function: download_music
@@ -42,31 +45,23 @@ download_music() {
   case "$service" in
   --spotify)
     echo "Downloading from Spotify..."
-    # Use spotdl to download from Spotify
-    mkdir /tmp/musicdl
-    cd /tmp/musicdl
-    spotdl "$url" && beet import .
-    cd
-    rm -rf /tmp/musicdl
-    sacad_r ~/Music/Mike/ 500 cover.jpg
+    mkdir /tmp/musicdl && cd /tmp/musicdl
+    spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
+    cd && rm -rf /tmp/musicdl
+    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
   --youtube)
-    echo "Downloading from Spotify..."
-    # Use spotdl to download from Spotify
-    mkdir /tmp/musicdl
-    cd /tmp/musicdl
-    spotdl "$url" && beet import .
-    cd
-    rm -rf /tmp/musicdl
-    sacad_r ~/Music/Mike/ 500 cover.jpg
+    echo "Downloading from YouTube..."
+    mkdir /tmp/musicdl && cd /tmp/musicdl
+    spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
+    cd && rm -rf /tmp/musicdl
+    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
   --tidal)
     echo "Downloading from Tidal..."
-    # Use Tidal Downloader NG or similar tool
-    tidal-dl-ng dl "$url"
-    beet import /Users/mike/Documents/Music
-    rm -rf /Users/mike/Documents/Music/*
-    sacad_r ~/Music/Mike/ 500 cover.jpg
+    tidal-dl-ng dl "$url" && beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads
+    rm -rf /tmp/tidal-downloads
+    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
   *)
     echo "Invalid download service specified. Use --spotify, --youtube, or --tidal."
