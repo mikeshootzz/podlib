@@ -25,24 +25,33 @@ download_music() {
   local url="$2"
 
   case "$service" in
-  # --spotify)
-  #   echo "Downloading from Spotify..."
-  #   # Use spotdl to download from Spotify
-  #   mkdir /tmp/musicdl
-  #   cd /tmp/musicdl
-  #   spotdl "$url" && beet import .
-  #   cd
-  #   rm -rf /tmp/musicdl
-  #   ;;
-  # --youtube)
-  #   echo "Downloading from YouTube..."
-  #   # Use spotdl to download from YouTube
-  #   # Example: spotdl "$url" -o /path/to/temp && beets import /path/to/temp && rm -rf /path/to/temp
-  #   ;;
+  --spotify)
+    echo "Downloading from Spotify..."
+    # Use spotdl to download from Spotify
+    mkdir /tmp/musicdl
+    cd /tmp/musicdl
+    spotdl "$url" && beet import .
+    cd
+    rm -rf /tmp/musicdl
+    sacad_r ~/Music/Mike/ 500 cover.jpg
+    ;;
+  --youtube)
+    echo "Downloading from Spotify..."
+    # Use spotdl to download from Spotify
+    mkdir /tmp/musicdl
+    cd /tmp/musicdl
+    spotdl "$url" && beet import .
+    cd
+    rm -rf /tmp/musicdl
+    sacad_r ~/Music/Mike/ 500 cover.jpg
+    ;;
   --tidal)
     echo "Downloading from Tidal..."
     # Use Tidal Downloader NG or similar tool
-    tidal-dl-ng dl "$url" && beet import /Users/mike/Documents/Music && rm -rf /Users/mike/Documents/Music/* && sacad_r ~/Music/Mike/ 500 cover.jpg
+    tidal-dl-ng dl "$url"
+    beet import /Users/mike/Documents/Music
+    rm -rf /Users/mike/Documents/Music/*
+    sacad_r ~/Music/Mike/ 500 cover.jpg
     ;;
   *)
     echo "Invalid download service specified. Use --spotify, --youtube, or --tidal."
