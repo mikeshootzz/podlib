@@ -1,0 +1,4 @@
+directory: /music-library
+import:
+  duplicate_action: skip
+

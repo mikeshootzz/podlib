@@ -19,8 +19,8 @@ RUN pip install spotdl beets tidal-dl-ng && \
 
 
 # Define environment variables for music library and iPod mount
-ENV MUSIC_LIBRARY /music-library
-ENV IPOD_MOUNT /ipod
+ENV MUSIC_LIBRARY="/music-library"
+ENV IPOD_MOUNT="/ipod"
 
 # Set the default command to run the script
 CMD ["/srv/podlib.sh"]
