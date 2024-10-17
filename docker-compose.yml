@@ -1,6 +1,6 @@
 services:
   podlib:
-    image: podlib
+    build: .
     volumes:
       - ./config:/root/.config
       - ./music:/music-library

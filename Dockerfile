@@ -5,7 +5,7 @@ FROM python:3.11
 WORKDIR /srv
 
 # Copy the script into the container
-COPY podlib.sh /srv/podlib.sh
+COPY ./podlib/podlib.sh /srv/podlib.sh
 
 # Install necessary packages
 # Install necessary packages
