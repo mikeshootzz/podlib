@@ -9,7 +9,7 @@ COPY ./podlib/podlib.sh /usr/local/bin/podlib
 
 # Install necessary packages
 # Install necessary packages
-RUN pip install spotdl beets tidal-dl-ng sacad && \
+RUN pip install spotdl beets tidal-dl-ng sacad yt-dlp && \
     apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \

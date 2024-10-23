@@ -46,6 +46,7 @@ download_music() {
   --spotify)
     echo "Downloading from Spotify..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
+    cd /tmp/musicdl
     spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
     cd && rm -rf /tmp/musicdl
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
@@ -53,7 +54,8 @@ download_music() {
   --youtube)
     echo "Downloading from YouTube..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
-    spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
+    cd /tmp/musicdl
+    yt-dlp "$url" && beet -d "$MUSIC_LIBRARY" import .
     cd && rm -rf /tmp/musicdl
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
