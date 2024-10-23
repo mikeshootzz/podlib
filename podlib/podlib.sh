@@ -34,7 +34,7 @@ get_covers() {
 # Function: sync_ipod
 sync_ipod() {
   echo "Syncing music to your iPod..."
-  rsync -av --ignore-existing --delete --exclude=".DS_Store" "$MUSIC_LIBRARY" "$IPOD_MOUNT"
+  rsync -av --ignore-existing --exclude=".DS_Store" "$MUSIC_LIBRARY" "$IPOD_MOUNT"
 }
 
 # Function: download_music
