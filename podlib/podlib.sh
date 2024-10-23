@@ -28,12 +28,13 @@ import_music() {
 get_covers() {
   echo "Getting covers for the entire music library..."
   sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
-  find "$MUSIC_LIBRARY" -name "cover.jpg" -exec magick {} -strip -interlace none {} \;
+  find "$MUSIC_LIBRARY" -name "cover.jpg" -exec convert {} -strip -interlace none {} \;
 }
 
 # Function: sync_ipod
 sync_ipod() {
   echo "Syncing music to your iPod..."
+  find "$MUSIC_LIBRARY" -name "cover.jpg" -exec convert {} -strip -interlace none {} \;
   rsync -av --ignore-existing --exclude=".DS_Store" "$MUSIC_LIBRARY" "$IPOD_MOUNT"
 }
 
