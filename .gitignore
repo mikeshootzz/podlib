@@ -1,3 +1,5 @@
 config/beets/library.db
 config/beets/state.pickle
 config/tidal_dl_ng/token.json
+music/
+.DS_Store

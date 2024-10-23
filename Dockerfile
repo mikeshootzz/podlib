@@ -5,17 +5,17 @@ FROM python:3.11
 WORKDIR /srv
 
 # Copy the script into the container
-COPY ./podlib/podlib.sh /srv/podlib.sh
+COPY ./podlib/podlib.sh /usr/local/bin/podlib
 
 # Install necessary packages
 # Install necessary packages
-RUN pip install spotdl beets tidal-dl-ng && \
+RUN pip install spotdl beets tidal-dl-ng sacad && \
     apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get update --fix-missing && \
     apt-get install -y imagemagick ffmpeg && \
-    chmod +x /srv/podlib.sh
+    chmod +x /usr/local/bin/podlib
 
 
 # Define environment variables for music library and iPod mount
