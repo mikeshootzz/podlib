@@ -14,7 +14,7 @@ RUN pip install spotdl beets tidal-dl-ng sacad yt-dlp && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     apt-get update --fix-missing && \
-    apt-get install -y imagemagick ffmpeg && \
+    apt-get install -y imagemagick ffmpeg rsync && \
     chmod +x /usr/local/bin/podlib
 
 

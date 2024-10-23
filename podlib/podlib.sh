@@ -35,7 +35,7 @@ get_covers() {
 sync_ipod() {
   echo "Syncing music to your iPod..."
   find "$MUSIC_LIBRARY" -name "cover.jpg" -exec convert {} -strip -interlace none {} \;
-  rsync -av --ignore-existing --exclude=".DS_Store" "$MUSIC_LIBRARY" "$IPOD_MOUNT"
+  rsync -av --ignore-existing --exclude=".DS_Store" "${MUSIC_LIBRARY}/" "$IPOD_MOUNT"
 }
 
 # Function: download_music
