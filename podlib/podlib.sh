@@ -54,11 +54,26 @@ download_music() {
   --youtube)
     echo "Downloading from YouTube..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
-    cd /tmp/musicdl
-    yt-dlp "$url" && beet -d "$MUSIC_LIBRARY" import .
+    yt-dlp --format mp4 "$url"
+
+    # Convert all mp4 files to mp3 using ffmpeg and delete mp4 files
+    for file in *.mp4; do
+      if [ -f "$file" ]; then
+        ffmpeg -i "$file" -q:a 0 "${file%.mp4}.mp3"
+        rm "$file"
+      fi
+    done
+
+    # Import the music using beets
+    beet -d "$MUSIC_LIBRARY" import .
+
+    # Clean up the temporary directory
     cd && rm -rf /tmp/musicdl
+
+    # Fetch cover art
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
+
   --tidal)
     echo "Downloading from Tidal..."
     tidal-dl-ng dl "$url" && beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads
