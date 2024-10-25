@@ -48,6 +48,7 @@ download_music() {
   --spotify)
     echo "Downloading from Spotify..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
+    cd /tmp/musicdl
     spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
     cd && rm -rf /tmp/musicdl
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
@@ -57,19 +58,8 @@ download_music() {
     mkdir /tmp/musicdl && cd /tmp/musicdl
     yt-dlp -x --audio-format mp3 "$url"
 
-    # Run the Beets import with `expect` to enable user input
-    expect <<EOF
-spawn beet -d "$MUSIC_LIBRARY" import .
-expect {
-  "No matching release found" {
-    send_user "\n[S]kip, Use as-is, as Tracks, Group albums, Enter search, enter Id, aBort? "
-    expect_user -re "(.*)\n"
-    send "$expect_out(1,string)\r"
-    exp_continue
-  }
-  eof
-}
-EOF
+    # Import the music using beets
+    beet -d "$MUSIC_LIBRARY" import .
 
     # Clean up the temporary directory
     cd && rm -rf /tmp/musicdl
