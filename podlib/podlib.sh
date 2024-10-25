@@ -25,6 +25,14 @@ import_music() {
   beet -d "$MUSIC_LIBRARY" import </dev/tty
 }
 
+list_music() {
+  beet ls
+}
+
+initialize() {
+  beet import -W -A "$MUSIC_LIBRARY"
+}
+
 # Function: get_covers
 get_covers() {
   echo "Getting covers for the entire music library..."
@@ -91,6 +99,12 @@ get-covers)
 sync)
   sync_ipod
   ;;
+ls)
+  list_music
+  ;;
+init)
+  initialize
+  ;;
 download)
   if [[ -n "$2" && -n "$3" ]]; then
     download_music "$2" "$3"
@@ -99,6 +113,6 @@ download)
   fi
   ;;
 *)
-  echo "Usage: $0 {import|get-covers|sync|download --spotify|--youtube|--tidal <URL>}"
+  echo "Usage: $0 {ls|import|get-covers|sync|download --spotify|--youtube|--tidal <URL>}"
   ;;
 esac
