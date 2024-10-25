@@ -12,6 +12,7 @@ CONFIG_DIR="$HOME/.config/podlib"
 if [ -d "$CLONE_DIR" ]; then
   echo "Directory $CLONE_DIR already exists. Pulling latest changes..."
   git -C "$CLONE_DIR" pull
+  docker compose -f "$CLONE_DIR/docker-compose.yml" pull
 else
   echo "Cloning repository into $CLONE_DIR..."
   git clone "$REPO_URL" "$CLONE_DIR"

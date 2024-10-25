@@ -113,6 +113,6 @@ download)
   fi
   ;;
 *)
-  echo "Usage: $0 {ls|import|get-covers|sync|download --spotify|--youtube|--tidal <URL>}"
+  echo "Usage: $0 {init|ls|import|get-covers|sync|download --spotify|--youtube|--tidal <URL>}"
   ;;
 esac
