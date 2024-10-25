@@ -1,6 +1,6 @@
 services:
   podlib:
-    image: ghcr.io/mikeshootzz/mikeshootzz/podlib/podlib:latest
+    image: dockermike1809/podlib:latest
     volumes:
       - $HOME/.config/podlib:/root/.config
       - $HOME/Music/Podlib:/music-library
