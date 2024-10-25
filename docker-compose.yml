@@ -4,4 +4,4 @@ services:
     volumes:
       - ./config:/root/.config
       - ./music:/music-library
-      - /Volumes/IPOD/Music:/ipod
+      # - /Volumes/IPOD/Music:/ipod

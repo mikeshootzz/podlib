@@ -12,6 +12,7 @@ echo "
 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑
 "
 echo "Your all-in-one music library manager, downloader, and iPod sync tool"
+echo "---------------------------------------------------------------------"
 
 sleep 1
 
@@ -55,15 +56,7 @@ download_music() {
   --youtube)
     echo "Downloading from YouTube..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
-    yt-dlp --format mp4 "$url"
-
-    # Convert all mp4 files to mp3 using ffmpeg and delete mp4 files
-    for file in *.mp4; do
-      if [ -f "$file" ]; then
-        ffmpeg -i "$file" -q:a 0 "${file%.mp4}.mp3"
-        rm "$file"
-      fi
-    done
+    yt-dlp -x --audio-format mp3 "$url"
 
     # Import the music using beets
     beet -d "$MUSIC_LIBRARY" import .
