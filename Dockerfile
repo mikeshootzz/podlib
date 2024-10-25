@@ -4,10 +4,6 @@ FROM python:3.11
 # Set working directory
 WORKDIR /srv
 
-# Copy the script into the container
-COPY ./podlib/podlib.sh /usr/local/bin/podlib
-
-# Install necessary packages
 # Install necessary packages
 RUN pip install spotdl beets tidal-dl-ng sacad yt-dlp && \
     apt-get update && \
@@ -17,6 +13,8 @@ RUN pip install spotdl beets tidal-dl-ng sacad yt-dlp && \
     apt-get install -y imagemagick ffmpeg rsync && \
     chmod +x /usr/local/bin/podlib
 
+# Copy the script into the container
+COPY ./podlib/podlib.sh /usr/local/bin/podlib
 
 # Define environment variables for music library and iPod mount
 ENV MUSIC_LIBRARY="/music-library"
