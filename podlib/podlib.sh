@@ -22,7 +22,7 @@ IPOD_MOUNT="${IPOD_MOUNT:-/ipod}"
 # Function: import_music
 import_music() {
   echo "Importing music into the library..."
-  beet -d "$MUSIC_LIBRARY" import
+  beet -d "$MUSIC_LIBRARY" import </dev/tty
 }
 
 # Function: get_covers
@@ -49,7 +49,7 @@ download_music() {
     echo "Downloading from Spotify..."
     mkdir /tmp/musicdl && cd /tmp/musicdl
     cd /tmp/musicdl
-    spotdl "$url" && beet -d "$MUSIC_LIBRARY" import .
+    spotdl "$url" && beet -d "$MUSIC_LIBRARY" import . </dev/tty
     cd && rm -rf /tmp/musicdl
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
@@ -59,7 +59,7 @@ download_music() {
     yt-dlp -x --audio-format mp3 "$url"
 
     # Import the music using beets
-    beet -d "$MUSIC_LIBRARY" import .
+    beet -d "$MUSIC_LIBRARY" import . </dev/tty
 
     # Clean up the temporary directory
     cd && rm -rf /tmp/musicdl
@@ -70,7 +70,7 @@ download_music() {
 
   --tidal)
     echo "Downloading from Tidal..."
-    tidal-dl-ng dl "$url" && beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads
+    tidal-dl-ng dl "$url" && beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads </dev/tty
     rm -rf /tmp/tidal-downloads
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
