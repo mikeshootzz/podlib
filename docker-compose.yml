@@ -2,6 +2,5 @@ services:
   podlib:
     image: ghcr.io/mikeshootzz/mikeshootzz/podlib/podlib:latest
     volumes:
-      - ./config:/root/.config
-      - ./music:/music-library
-      # - /Volumes/IPOD/Music:/ipod
+      - $HOME/.config/podlib:/root/.config
+      - $HOME/Music/Podlib:/music-library
