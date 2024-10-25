@@ -59,17 +59,17 @@ download_music() {
 
     # Run the Beets import with `expect` to enable user input
     expect <<EOF
-    spawn beet -d "$MUSIC_LIBRARY" import .
-    expect {
-      "No matching release found" {
-        send_user "\n[S]kip, Use as-is, as Tracks, Group albums, Enter search, enter Id, aBort? "
-        expect_user -re "(.*)\n"
-        send "$expect_out(1,string)\r"
-        exp_continue
-      }
-      eof
-    }
-    EOF
+spawn beet -d "$MUSIC_LIBRARY" import .
+expect {
+  "No matching release found" {
+    send_user "\n[S]kip, Use as-is, as Tracks, Group albums, Enter search, enter Id, aBort? "
+    expect_user -re "(.*)\n"
+    send "$expect_out(1,string)\r"
+    exp_continue
+  }
+  eof
+}
+EOF
 
     # Clean up the temporary directory
     cd && rm -rf /tmp/musicdl
@@ -112,4 +112,3 @@ download)
   echo "Usage: $0 {import|get-covers|sync|download --spotify|--youtube|--tidal <URL>}"
   ;;
 esac
-
