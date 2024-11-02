@@ -8,7 +8,7 @@ echo "
 󰲑  |    ___||  |_|  || |_|   ||   |___ |   | |  _   |   󰲑
 󰲑  |   |    |       ||       ||       ||   | | |_|   |  󰲑
 󰲑  |___|    |_______||______| |_______||___| |_______|  󰲑
-󰲑                                                       󰲑 
+󰲑                                                       󰲑
 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑 󰲑
 "
 echo "Your all-in-one music library manager, downloader, and iPod sync tool"
@@ -78,7 +78,23 @@ download_music() {
 
   --tidal)
     echo "Downloading from Tidal..."
-    tidal-dl-ng dl "$url" && beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads </dev/tty
+    tidal-dl-ng dl "$url" </dev/tty
+
+    cd /tmp/tidal-downloads
+    find . -type f -name '*.flac' -exec bash -c '
+        file="$1"
+        output="${file%.flac}.m4a"
+        echo "Processing: $file"
+        ffmpeg -y -i "$file" -vn -c:a alac -sample_fmt s16p -ar 44100 "$output"
+        if [ $? -eq 0 ]; then
+            rm "$file"
+            echo "Successfully converted and deleted: $file"
+        else
+            echo "Conversion failed for: $file"
+        fi
+    ' _ {} \;
+
+    beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads </dev/tty
     rm -rf /tmp/tidal-downloads
     sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
     ;;
