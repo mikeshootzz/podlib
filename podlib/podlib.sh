@@ -36,14 +36,12 @@ initialize() {
 # Function: get_covers
 get_covers() {
   echo "Getting covers for the entire music library..."
-  sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
-  find "$MUSIC_LIBRARY" -name "cover.jpg" -exec convert {} -strip -interlace none {} \;
+  sacad_r "$MUSIC_LIBRARY" 500 "+"  --convert-progressive-jpeg
 }
 
 # Function: sync_ipod
 sync_ipod() {
   echo "Syncing music to your iPod..."
-  find "$MUSIC_LIBRARY" -name "cover.jpg" -exec convert {} -strip -interlace none {} \;
   rsync -av --ignore-existing --exclude=".DS_Store" "${MUSIC_LIBRARY}/" "$IPOD_MOUNT"
 }
 
@@ -59,7 +57,7 @@ download_music() {
     cd /tmp/musicdl
     spotdl "$url" && beet -d "$MUSIC_LIBRARY" import . </dev/tty
     cd && rm -rf /tmp/musicdl
-    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
+    sacad_r "$MUSIC_LIBRARY" 500 "+"  --convert-progressive-jpeg
     ;;
   --youtube)
     echo "Downloading from YouTube..."
@@ -73,7 +71,7 @@ download_music() {
     cd && rm -rf /tmp/musicdl
 
     # Fetch cover art
-    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
+    sacad_r "$MUSIC_LIBRARY" 500 "+"  --convert-progressive-jpeg
     ;;
 
   --tidal)
@@ -96,7 +94,7 @@ download_music() {
 
     beet -d "$MUSIC_LIBRARY" import /tmp/tidal-downloads </dev/tty
     rm -rf /tmp/tidal-downloads
-    sacad_r "$MUSIC_LIBRARY" 500 cover.jpg
+    sacad_r "$MUSIC_LIBRARY" 500 "+"  --convert-progressive-jpeg
     ;;
   *)
     echo "Invalid download service specified. Use --spotify, --youtube, or --tidal."
